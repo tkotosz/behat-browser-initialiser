@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bex.browser_initialiser_extension.config" class="Bex\Behat\BrowserInitialiserExtension\ServiceContainer\Config" />
+
+        <!-- event listener -->
+        <service id="bex.browser_initialiser_extension.browser_initialiser_listener" class="Bex\Behat\BrowserInitialiserExtension\Listener\BrowserInitialiserListener" public="false">
+            <tag name="event_dispatcher.subscriber" />
+            <argument type="service" id="bex.browser_initialiser_extension.config" />
+            <argument type="service" id="mink" />
+        </service>
+    </services>
+</container>
