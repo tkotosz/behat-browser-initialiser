@@ -8,6 +8,16 @@ class Config
     const CONFIG_KEY_WINDOWS_SIZE = 'browser_window_size';
 
     /**
+     * @var boolean
+     */
+    private $closeBrowser;
+
+    /**
+     * @var string
+     */
+    private $windowSize;
+
+    /**
      * @param array $config
      */
     public function __construct(array $config)

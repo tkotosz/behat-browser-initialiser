@@ -5,6 +5,7 @@ namespace Bex\Behat\BrowserInitialiserExtension\ServiceContainer;
 use Behat\Testwork\ServiceContainer\Extension;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Bex\Behat\BrowserInitialiserExtension\ServiceContainer\Config;
+use Bex\Behat\BrowserInitialiserExtension\ServiceContainer\ConfigValidator;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -43,6 +44,7 @@ class BrowserInitialiserExtension implements Extension
      */
     public function configure(ArrayNodeDefinition $builder)
     {
+        $validator = new ConfigValidator();
         $builder
             ->children()
                 ->booleanNode('close_browser_after_scanerio')
@@ -51,7 +53,7 @@ class BrowserInitialiserExtension implements Extension
                 ->scalarNode('browser_window_size')
                     ->defaultValue('max')
                     ->validate()
-                        ->always($this->getBrowserSizeValueValidator())
+                        ->always($validator->getBrowserSizeValueValidator())
                     ->end()
                 ->end()
             ->end();
@@ -67,23 +69,5 @@ class BrowserInitialiserExtension implements Extension
 
         $extensionConfig = new Config($config);
         $container->set('bex.browser_initialiser_extension.config', $extensionConfig);
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function getBrowserSizeValueValidator()
-    {
-        return function ($value) {
-            $size = explode('x', $value);
-            $width = isset($size[0]) ? $size[0] : '';
-            $height = isset($size[1]) ? $size[1] : '';
-
-            if ($value == 'max' || (is_numeric($width) && is_numeric($height))) {
-                return $value;
-            }
-
-            throw new \InvalidArgumentException("Invalid browser size: $value. Valid values: 'max' or 'WIDTHxHEIGHT");
-        };
     }
 }
