@@ -4,7 +4,7 @@ namespace Bex\Behat\BrowserInitialiserExtension\ServiceContainer;
 
 class Config
 {
-    const CONFIG_KEY_CLOSE_BROWSER = 'close_browser_after_scanerio';
+    const CONFIG_KEY_CLOSE_BROWSER = 'close_browser_after_scenario';
     const CONFIG_KEY_WINDOWS_SIZE = 'browser_window_size';
 
     /**

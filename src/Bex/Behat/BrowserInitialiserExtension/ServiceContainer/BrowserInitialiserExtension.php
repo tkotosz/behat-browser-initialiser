@@ -47,7 +47,7 @@ class BrowserInitialiserExtension implements Extension
         $validator = new ConfigValidator();
         $builder
             ->children()
-                ->booleanNode('close_browser_after_scanerio')
+                ->booleanNode('close_browser_after_scenario')
                     ->defaultFalse()
                 ->end()
                 ->scalarNode('browser_window_size')
