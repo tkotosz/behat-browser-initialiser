@@ -28,8 +28,8 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": {
-            "": "src"
+        "psr-4": {
+            "Bex\\Behat\\BrowserInitialiserExtension\\": "src"
         }
     },
     "scripts": {
