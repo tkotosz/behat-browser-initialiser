@@ -48,7 +48,7 @@ class Config
     public function getWindowWidth()
     {
         $sizes = explode('x', $this->windowSize);
-        return $sizes[0];
+        return (int) $sizes[0];
     }
 
     /**
@@ -57,6 +57,6 @@ class Config
     public function getWindowHeight()
     {
         $sizes = explode('x', $this->windowSize);
-        return $sizes[1];
+        return (int) $sizes[1];
     }
 }
