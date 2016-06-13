@@ -4,12 +4,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="bex.browser_initialiser_extension.config" class="Bex\Behat\BrowserInitialiserExtension\ServiceContainer\Config" />
+        
+        <service id="bex.browser_initialiser_extension.browser_window_handler_service" class="Bex\Behat\BrowserInitialiserExtension\Service\BrowserWindowHandler">
+            <argument type="service" id="mink" />
+            <argument type="service" id="cli.output" />
+            <argument type="service" id="bex.browser_initialiser_extension.config" />
+        </service>
 
         <!-- event listener -->
         <service id="bex.browser_initialiser_extension.browser_initialiser_listener" class="Bex\Behat\BrowserInitialiserExtension\Listener\BrowserInitialiserListener" public="false">
             <tag name="event_dispatcher.subscriber" />
-            <argument type="service" id="bex.browser_initialiser_extension.config" />
-            <argument type="service" id="mink" />
+            <argument type="service" id="bex.browser_initialiser_extension.browser_window_handler_service" />
         </service>
     </services>
 </container>

@@ -3,30 +3,22 @@
 namespace Bex\Behat\BrowserInitialiserExtension\Listener;
 
 use Behat\Behat\EventDispatcher\Event\ScenarioTested;
-use Behat\Mink\Mink;
-use Bex\Behat\BrowserInitialiserExtension\ServiceContainer\Config;
+use Bex\Behat\BrowserInitialiserExtension\Service\BrowserWindowHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class BrowserInitialiserListener implements EventSubscriberInterface
 {
     /**
-     * @var Config
+     * @var BrowserWindowHandler
      */
-    private $config;
+    private $browserWindowHandler;
 
     /**
-     * @var Mink
+     * @param BrowserWindowHandler $browserWindowHandler
      */
-    private $mink;
-
-    /**
-     * @param Config $config
-     * @param Mink   $mink
-     */
-    public function __construct(Config $config, Mink $mink)
+    public function __construct(BrowserWindowHandler $browserWindowHandler)
     {
-        $this->config = $config;
-        $this->mink = $mink;
+        $this->browserWindowHandler = $browserWindowHandler;
     }
 
     /**
@@ -42,20 +34,11 @@ final class BrowserInitialiserListener implements EventSubscriberInterface
 
     public function initBrowserWindow()
     {
-        if ($this->config->shouldMaximizeWindow()) {
-            $this->mink->getSession()->maximizeWindow();
-        } else {
-            $this->mink->getSession()->resizeWindow(
-                $this->config->getWindowWidth(),
-                $this->config->getWindowHeight()
-            );
-        }
+        $this->browserWindowHandler->initBrowserWindow();
     }
 
     public function closeBrowserWindow()
     {
-        if ($this->config->shouldCloseBrowser()) {
-            $this->mink->getSession()->stop();
-        }
+        $this->browserWindowHandler->closeBrowserWindow();
     }
 }
