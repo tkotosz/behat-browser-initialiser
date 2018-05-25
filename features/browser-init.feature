@@ -121,3 +121,20 @@ Feature: Taking screenshot
       """
     When I run Behat
     Then I should see the message "Invalid browser size: asdf. Valid values: 'max' or 'WIDTHxHEIGHT"
+
+  Scenario: Does not show the unsupported driver action errors
+    Given I have the configuration:
+      """
+      default:
+        extensions:
+          Behat\MinkExtension:
+            base_url: 'http://localhost:8080'
+            sessions:
+              default:
+                goutte: ~
+
+          Bex\Behat\BrowserInitialiserExtension:
+            browser_window_size: 1024x768
+      """
+    When I run Behat
+    Then I should not see the message "Window resizing is not supported by Behat\Mink\Driver\GoutteDriver"

@@ -2,6 +2,7 @@
 
 namespace Bex\Behat\BrowserInitialiserExtension\Service;
 
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Mink\Mink;
 use Bex\Behat\BrowserInitialiserExtension\ServiceContainer\Config;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -55,6 +56,8 @@ class BrowserWindowHandler
     {
         try {
             $this->mink->getSession()->maximizeWindow();
+        } catch (UnsupportedDriverActionException $e) {
+            return;
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
         }  
@@ -64,6 +67,8 @@ class BrowserWindowHandler
     {
         try {
             $this->mink->getSession()->resizeWindow($width, $height);
+        } catch (UnsupportedDriverActionException $e) {
+            return;
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
         }  
@@ -73,6 +78,8 @@ class BrowserWindowHandler
     {
         try {
             $this->mink->getSession()->stop();
+        } catch (UnsupportedDriverActionException $e) {
+            return;
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
         }  
